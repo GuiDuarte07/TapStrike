@@ -1,7 +1,7 @@
 import random
 from typing import Literal, get_args
 
-from code.Entities.Enemy import Enemy, EnemyType
+from src.Entities.Enemy import Enemy, EnemyType
 
 EnemySprite = Literal[
     'AlienSoldier',
@@ -47,8 +47,8 @@ class EnemyFactory:
             enemies.append(
                 EnemyFactory.get_enemy(
                     random.choice(enemy_sprites),
-                    initial_health,
-                    initial_drop_gold,
+                    initial_health + i*1,
+                    int(initial_drop_gold + i*0.5),
                     'normal' if has_boss is False or (has_boss and i != list_size - 1) else 'boss'
                 )
             )

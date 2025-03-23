@@ -2,8 +2,8 @@ import sys
 
 import pygame
 
-from code.Const import WIN_WIDTH, WIN_HEIGHT
-from code.Factories.LevelFactory import LevelFactory
+from src.Const import WIN_WIDTH, WIN_HEIGHT
+from src.Factories.LevelFactory import LevelFactory
 
 
 class Game:
@@ -16,7 +16,7 @@ class Game:
         while True:
             level = LevelFactory.get_level(self.window, 1)
             level.run()
-
+            pygame.mouse.set_cursor(pygame.cursors.arrow)
             # menu = Menu(self.window)
             # menu_return = menu.run()
 

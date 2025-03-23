@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from code.Entities.Entity import Entity
+from src.Entities.Entity import Entity
 
 
 class Ally(Entity, ABC):

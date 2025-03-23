@@ -1,8 +1,8 @@
 from pygame import Surface
 
-from code.Entities.Backgound import Background
-from code.Entities.Level import Level
-from code.Factories.EnemyFactory import EnemyFactory
+from src.Entities.Backgound import Background
+from src.Entities.Level import Level
+from src.Factories.EnemyFactory import EnemyFactory
 
 
 class LevelFactory:

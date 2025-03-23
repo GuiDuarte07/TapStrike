@@ -1,4 +1,4 @@
-from code.Game import Game
+from src.Game import Game
 
 print("Olá, esse é o projeto TapStrike")
 

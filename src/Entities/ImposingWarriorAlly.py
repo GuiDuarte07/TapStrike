@@ -1,4 +1,4 @@
-from code.Entities.Ally import Ally
+from src.Entities.Ally import Ally
 
 
 class ImposingWarriorAlly(Ally):

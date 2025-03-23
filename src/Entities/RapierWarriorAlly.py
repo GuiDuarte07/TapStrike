@@ -1,4 +1,5 @@
-from code.Entities.Ally import Ally
+from src.Entities.Ally import Ally
+from src.Entities.Player import Player
 
 
 class RapierWarriorAlly(Ally):
