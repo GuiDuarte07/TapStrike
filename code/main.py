@@ -1,1 +1,0 @@
-print("Olá, esse é o projeto TapStrike vázio")
