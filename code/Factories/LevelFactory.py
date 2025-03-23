@@ -2,6 +2,7 @@ from pygame import Surface
 
 from code.Entities.Backgound import Background
 from code.Entities.Level import Level
+from code.Factories.EnemyFactory import EnemyFactory
 
 
 class LevelFactory:
@@ -17,7 +18,7 @@ class LevelFactory:
                 window,
                 "Campos montanhosos",
                 level,
-                [],
+                EnemyFactory.rand_enemy_list(10, 10, 3, True),
                 Background("Campos montanhosos", "mountainous_fields_bg.jpg")
             )
 
