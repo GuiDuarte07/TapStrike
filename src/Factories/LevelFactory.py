@@ -2,6 +2,7 @@ from pygame import Surface
 
 from src.Entities.Backgound import Background
 from src.Entities.Level import Level
+from src.Entities.Player import Player
 from src.Factories.EnemyFactory import EnemyFactory
 
 
@@ -10,7 +11,7 @@ class LevelFactory:
         pass
 
     @staticmethod
-    def get_level(window: Surface, level: int):
+    def get_level(window: Surface, level: int, player: Player) -> Level | None:
         if level < 1: return None
 
         if level <= 10:
@@ -18,8 +19,19 @@ class LevelFactory:
                 window,
                 "Campos montanhosos",
                 level,
-                EnemyFactory.rand_enemy_list(10, 10, 3, True),
+                player,
+                EnemyFactory.rand_enemy_list(10, level*6 + 10, 3, True),
                 Background("Campos montanhosos", "mountainous_fields_bg.jpg")
+            )
+
+        if level <= 20:
+            return Level(
+                window,
+                "Abismo Desconhecido",
+                level,
+                player,
+                EnemyFactory.rand_enemy_list(10, level * 9 + 30, 20, True),
+                Background("Abismo Desconhecido", "unknown_abyss_bg.jpg")
             )
 
         return None

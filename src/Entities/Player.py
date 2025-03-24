@@ -2,7 +2,7 @@ from src.Entities.Ally import Ally
 
 
 class Player:
-    def __init__(self, gold: int, level: int, skill_level: int, allies=None):
+    def __init__(self, gold:int=0, level:int=1, skill_level:int =0, allies=None):
         if allies is None:
             allies = []
         self.gold = gold
@@ -10,11 +10,13 @@ class Player:
         self.skill_level = skill_level
         self.allies = allies
         self.skill_cd_ms = 3000  # skill cooldown milliseconds
+        self.enable_skill = True
 
     def click_damage(self):
         return self.level
 
     def skill_damage(self):
+        self.enable_skill = False
         return self.skill_level * 10
 
     def gold_to_up(self):

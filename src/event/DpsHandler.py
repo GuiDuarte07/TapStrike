@@ -9,13 +9,23 @@ class DpsHandler:
         self.player = player
         self.enemies = enemies
         self.DPS_EVENT = pygame.USEREVENT + 1
+        self.SKILL_EVENT = pygame.USEREVENT + 2
         pygame.time.set_timer(self.DPS_EVENT, 1000)
+        pygame.time.set_timer(self.SKILL_EVENT, self.player.skill_cd_ms)
+
+    def handle_skill_cd(self, event: pygame.event.Event):
+        """Verifica se o evento SKILL_EVENT foi ativado para liberar o uso da skill"""
+        if event.type == self.SKILL_EVENT:
+            print("Skill Disponível")
+            self.player.enable_skill = True
+
 
     def handle_dps(self, event: pygame.event.Event):
         """Verifica se o evento DPS_EVENT foi ativo e aplica o dps dos aliados"""
-        if event.type == self.DPS_EVENT:
-            print("Clock!")
 
+        if len(self.enemies) == 0: return
+
+        if event.type == self.DPS_EVENT:
             enemy = self.enemies[0]
 
             total_dps = sum(ally.dps for ally in self.player.allies)

@@ -70,11 +70,17 @@ class UpgradeMenu:
             }
         }
 
-
     def draw(self):
         """Desenha o menu na tela"""
+
         menu_height = self.expanded_height if self.is_expanded else self.height
-        pygame.draw.rect(self.window, self.bg_color, (0, self.window.get_height() - menu_height, self.width, menu_height))
+        menu_side = pygame.Rect(0, self.window.get_height() - menu_height, self.width, menu_height)
+        pygame.draw.rect(self.window, self.bg_color, menu_side)
+
+        text_surface = pygame.font.SysFont('Lucida Sans Typewriter', 14).render("Abrir Menu", True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=menu_side.center)
+
+        self.window.blit(text_surface, text_rect)
 
         cursor_changed = False  # Flag para mudar o cursor
 

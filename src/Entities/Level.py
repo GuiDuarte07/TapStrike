@@ -1,32 +1,29 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-import random
 import sys
 
 import pygame
 from pygame import Surface, Rect
+from pygame.examples.moveit import WIDTH, HEIGHT
 from pygame.font import Font
 
-from src.Const import WIN_WIDTH
 from src.Entities import Enemy
 from src.Entities.Backgound import Background
-from src.Entities.ImposingWarriorAlly import ImposingWarriorAlly
 from src.Entities.Player import Player
-from src.Entities.RapierWarriorAlly import RapierWarriorAlly
 from src.event.ClickHandler import ClickHandler
 from src.event.DpsHandler import DpsHandler
 from src.view.UpgradeMenu import UpgradeMenu
 
 
 class Level:
-    def __init__(self, window: Surface, name: str, level: int, enemies:list[Enemy], bg:Background):
+    def __init__(self, window: Surface, name: str, level: int, player: Player, enemies:list[Enemy], bg:Background):
         self.window = window
         self.name = name
         self.level = level
+        self.player = player
         self.enemies = enemies
         self.bg = bg
         self.click_handler = None
         self.dps_handler = None
+        self.font = pygame.font.SysFont("Arial", 26)
 
     def run(self) -> bool:
         #pygame.mixer_music.load(f'./asset/{self.name}.mp3')
@@ -34,18 +31,17 @@ class Level:
         #pygame.mixer_music.play(-1)
         clock = pygame.time.Clock()
 
+        self.click_handler = ClickHandler(self.player, self.enemies)
+        self.dps_handler = DpsHandler(self.player, self.enemies)
 
-        player = Player(1202, 1, 0)
-        self.click_handler = ClickHandler(player, self.enemies)
-        self.dps_handler = DpsHandler(player, self.enemies)
-
-        upgrade_menu = UpgradeMenu(self.window, player)
+        from src.view.HUD import HUD
+        hud = HUD(self.window, self.player, self)
+        upgrade_menu = UpgradeMenu(self.window, self.player)
 
 
         while True:
             clock.tick(60)
             self.window.blit(source=self.bg.surf, dest=self.bg.rect)
-            self.text_screen(23, f"Gold: {player.gold}",(0,0,0), (30, 10))
 
 
             if len(self.enemies) > 0:
@@ -54,18 +50,23 @@ class Level:
             else:
                 print(f"Level {self.level} - Concluído!")
                 return True
-            for ally in player.allies:
+            for ally in self.player.allies:
                 self.window.blit(source=ally.surf, dest=ally.rect)
 
             upgrade_menu.draw()
+            hud.draw()
+
+            skill_box_rect = self._draw_skill_btn()
 
             #  -- Event Loop --
             for event in pygame.event.get():
                 upgrade_menu.handle_event(event) #Eventos do menu de upgrade
                 if upgrade_menu.is_expanded is False:
                     self.click_handler.handle_click(event)  # Enviar evento para o handle_click
+                    self.click_handler.handle_skill_click(event, skill_box_rect)
 
                 self.dps_handler.handle_dps(event)
+                self.dps_handler.handle_skill_cd(event)
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -73,8 +74,18 @@ class Level:
 
             pygame.display.flip()
 
-    def text_screen(self, font_size: int, text: str, text_color: tuple, text_center_pos: tuple):
-        text_font: Font = pygame.font.SysFont(None, size=font_size)
-        text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
-        text_rect: Rect = text_surf.get_rect(center=text_center_pos)
-        self.window.blit(source=text_surf, dest=text_rect)
+    def _draw_skill_btn(self) -> Rect|None:
+        if self.player.enable_skill is False or self.player.skill_level == 0: return None
+
+        box_rect = pygame.Rect((WIDTH // 2 - 130, 70, 100, 45))
+        # Desenha a caixa arredondada
+        pygame.draw.rect(self.window, (128,128,128), box_rect, border_radius=15)
+
+        # Renderiza o texto
+        text_surface = self.font.render("Skill", True, (255,255,255))
+        text_rect = text_surface.get_rect(center=box_rect.center)
+
+        self.window.blit(text_surface, text_rect)
+
+
+        return box_rect

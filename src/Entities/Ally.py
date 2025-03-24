@@ -3,9 +3,10 @@ from src.Entities.Entity import Entity
 
 
 class Ally(Entity, ABC):
-    def __init__(self, name: str, asset: str, position: tuple, initial_gold_cust: int, level: int):
+    def __init__(self, identity: str,name: str, asset: str, position: tuple, initial_gold_cust: int, level: int):
         super().__init__(name, asset, position)
         self.level = level
+        self.identity = identity
         self.dps = 0
         self._calc_dps()
         self.initial_gold_cust = initial_gold_cust
