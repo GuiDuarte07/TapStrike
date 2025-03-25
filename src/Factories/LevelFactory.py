@@ -21,7 +21,8 @@ class LevelFactory:
                 level,
                 player,
                 EnemyFactory.rand_enemy_list(10, level*6 + 10, 3, True),
-                Background("Campos montanhosos", "mountainous_fields_bg.jpg")
+                Background("Campos montanhosos", "mountainous_fields_bg.jpg"),
+                './assets/mountainous_fields_sound.wav'
             )
 
         if level <= 20:
@@ -31,7 +32,8 @@ class LevelFactory:
                 level,
                 player,
                 EnemyFactory.rand_enemy_list(10, level * 9 + 30, 20, True),
-                Background("Abismo Desconhecido", "unknown_abyss_bg.jpg")
+                Background("Abismo Desconhecido", "unknown_abyss_bg.jpg"),
+                './assets/unknown_abyss_sound.wav'
             )
 
         return None

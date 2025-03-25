@@ -14,21 +14,23 @@ from src.view.UpgradeMenu import UpgradeMenu
 
 
 class Level:
-    def __init__(self, window: Surface, name: str, level: int, player: Player, enemies:list[Enemy], bg:Background):
+    def __init__(self, window: Surface, name: str, level: int, player: Player, enemies:list[Enemy], bg:Background, bg_sound_path:str):
         self.window = window
         self.name = name
         self.level = level
         self.player = player
         self.enemies = enemies
         self.bg = bg
+        self.bg_sound_path = bg_sound_path
         self.click_handler = None
         self.dps_handler = None
         self.font = pygame.font.SysFont("Arial", 26)
 
+
     def run(self) -> bool:
-        #pygame.mixer_music.load(f'./asset/{self.name}.mp3')
-        #pygame.mixer_music.set_volume(0.3)
-        #pygame.mixer_music.play(-1)
+        pygame.mixer_music.load(self.bg_sound_path)
+        pygame.mixer_music.set_volume(0.3)
+        pygame.mixer_music.play(-1)
         clock = pygame.time.Clock()
 
         self.click_handler = ClickHandler(self.player, self.enemies)
@@ -76,7 +78,7 @@ class Level:
 
     def _draw_skill_btn(self) -> Rect|None:
         if self.player.enable_skill is False or self.player.skill_level == 0: return None
-
+        print("skill desenhada na tela")
         box_rect = pygame.Rect((WIDTH // 2 - 130, 70, 100, 45))
         # Desenha a caixa arredondada
         pygame.draw.rect(self.window, (128,128,128), box_rect, border_radius=15)

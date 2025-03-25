@@ -19,7 +19,9 @@ class ClickHandler:
             enemy = self.enemies[0]
             if enemy.rect.collidepoint(mouse_pos):  # Verifica se o clique foi no inimigo
                 enemy.take_damage(self.player.click_damage())
+                self._play_song('./assets/click_damage.wav')
                 if enemy.is_dead():
+                    self._play_song('./assets/dead.wav')
                     self.enemies.remove(enemy)  # Remove inimigo se estiver morto
                     self.player.earn_gold(enemy.drop_gold)
 
@@ -46,3 +48,8 @@ class ClickHandler:
                 if enemy.is_dead():
                     self.enemies.remove(enemy)  # Remove inimigo se estiver morto
                     self.player.earn_gold(enemy.drop_gold)
+
+    def _play_song(self, path: str):
+        click_sound = pygame.mixer.Sound(path)
+        click_sound.set_volume(0.5)
+        click_sound.play()

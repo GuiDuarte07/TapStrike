@@ -42,9 +42,7 @@ class Player:
         return True
 
     def upgrade_buy_ally(self, ally_up: Ally) -> bool:
-        print(ally_up, 43)
         ally = next((ally for ally in self.allies if ally.name == ally_up.name), None)
-        print(ally, 45)
         if ally:
             if self.gold < ally.gold_to_up():
                 return False
