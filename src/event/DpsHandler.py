@@ -16,7 +16,6 @@ class DpsHandler:
     def handle_skill_cd(self, event: pygame.event.Event):
         """Verifica se o evento SKILL_EVENT foi ativado para liberar o uso da skill"""
         if event.type == self.SKILL_EVENT:
-            print("Skill Disponível")
             self.player.enable_skill = True
 
 

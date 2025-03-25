@@ -78,7 +78,6 @@ class Level:
 
     def _draw_skill_btn(self) -> Rect|None:
         if self.player.enable_skill is False or self.player.skill_level == 0: return None
-        print("skill desenhada na tela")
         box_rect = pygame.Rect((WIDTH // 2 - 130, 70, 100, 45))
         # Desenha a caixa arredondada
         pygame.draw.rect(self.window, (128,128,128), box_rect, border_radius=15)
